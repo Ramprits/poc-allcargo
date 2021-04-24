@@ -1,0 +1,69 @@
+<div class="container">
+  <form class="form" [formGroup]="searchForm">
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>From</mat-label>
+      <mat-select formControlName="from" required>
+        <mat-option>--</mat-option>
+        <mat-option *ngFor="let country of countries" [value]="country">
+          {{ country.name }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="searchFormControl.from.hasError('required')">Please choose from country</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="full-width">
+      <mat-label>To</mat-label>
+      <mat-select formControlName="to" required>
+        <mat-option>--</mat-option>
+        <mat-option *ngFor="let country of countries" [value]="country">
+          {{ country.name }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="searchFormControl.to.hasError('required')">Please choose to country</mat-error>
+    </mat-form-field>
+    <button mat-raised-button type="button" class="searchButton" color="primary" (click)="onSearch()">Search</button>
+  </form>
+  <app-loader [isLoading]="isLoading"></app-loader>
+  <ng-container *ngIf="!isLoading">
+    <table mat-table [dataSource]="dataSource" matSort>
+      <!-- id Column -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>No.</th>
+        <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+      </ng-container>
+
+      <!-- voyage Number Column -->
+      <ng-container matColumnDef="voyageNumber">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Voyage Number</th>
+        <td mat-cell *matCellDef="let element">{{ element.voyageNumber }}</td>
+      </ng-container>
+
+      <!-- product Type Column -->
+      <ng-container matColumnDef="productType">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Product Type</th>
+        <td mat-cell *matCellDef="let element">{{ element.productType }}</td>
+      </ng-container>
+
+      <!-- cut Off Column -->
+      <ng-container matColumnDef="cutOff">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Cut Off</th>
+        <td mat-cell *matCellDef="let element">{{ element.cutOff | date }}</td>
+      </ng-container>
+
+      <!-- cut Off IMO Column -->
+      <ng-container matColumnDef="cutOffIMO">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Cut Off IMO</th>
+        <td mat-cell *matCellDef="let element">{{ element.cutOffIMO | date }}</td>
+      </ng-container>
+      <!-- place Of Receipt Column -->
+      <ng-container matColumnDef="placeOfReceipt.name">
+        <th mat-header-cell *matHeaderCellDef>Place Of Receipt</th>
+        <td mat-cell *matCellDef="let element">{{ element.placeOfReceipt.name }}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+  </ng-container>
+</div>

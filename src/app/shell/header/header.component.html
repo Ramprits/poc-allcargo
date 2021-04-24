@@ -1,0 +1,17 @@
+<mat-toolbar class="mat-elevation-z6 navbar" color="primary">
+  <div fxHide.gt-sm fxLayoutAlign="start center">
+    <button class="menu-button" mat-icon-button (click)="sidenav.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span class="title">{{ title }}</span>
+  </div>
+  <div fxHide.lt-md style="margin-left: 120px">
+    <a class="brand" [routerLink]="['/']" translate>APP_NAME</a>
+    <button mat-button routerLink="/home" routerLinkActive="active">
+      <mat-icon>home</mat-icon>
+      <span translate>Home</span>
+    </button>
+  </div>
+  <span fxFlex></span>
+  <app-language-selector icon="true"></app-language-selector>
+</mat-toolbar>
